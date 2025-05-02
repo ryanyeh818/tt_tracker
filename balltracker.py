@@ -38,9 +38,13 @@ def main(args):
             self.points = []
 
         def select_point(self, event, x, y, flags, param):
-            if event == cv2.EVENT_LBUTTONDBLCLK:
-                cv2.circle(frame, (x, y), 3, (255, 0, 0), -1)
+            # 改成單擊就選點
+            if event == cv2.EVENT_LBUTTONDOWN:
+                # 在畫面上畫一個綠色小圓
+                cv2.circle(frame, (x, y), 5, (0, 255, 0), -1)
                 self.points.append((x, y))
+                # 立即更新視窗，讓你看到標記
+                cv2.imshow("image", frame)
 
     # instantiate class
     coordinateStore1 = CoordinateStore()
