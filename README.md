@@ -106,6 +106,39 @@
 - 接入判斷出界 / 未過網 / 多球追蹤
 - 匯出 `speed3d.npy` 成 CSV / 可圖表化分析
 
+## 環境設置
+
+### 系統要求
+- Python 3.9 或更高版本
+- OpenCV 4.5.0 或更高版本
+- Pygame 2.0.0 或更高版本
+- NumPy 1.19.0 或更高版本
+
+### 安裝步驟
+
+1. 克隆倉庫：
+```bash
+git clone https://github.com/ryanyeh818/tt_tracker.git
+cd tt_tracker
+```
+
+2. 創建並激活虛擬環境：
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# 或
+.\venv\Scripts\activate  # Windows
+```
+
+3. 安裝依賴：
+```bash
+pip install -r requirements.txt
+```
+
+### 注意事項
+- 請確保使用 Python 3.9 或更高版本
+- 如果遇到 OpenCV 相關問題，可能需要安裝額外的系統依賴
+- 建議使用虛擬環境來避免包依賴衝突
 ---
 
 # Original TT_Tracker
