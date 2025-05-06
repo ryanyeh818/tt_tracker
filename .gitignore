@@ -1,3 +1,26 @@
-.idea/
-.ipynb_checkpoints/
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual Environment
+tt/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Project specific
+data/
+videos/
+videos_original/
+*.npy
+*.mp4
+weights.onnx 
