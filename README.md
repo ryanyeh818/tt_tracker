@@ -110,13 +110,13 @@
 
 ### 系統要求
 - Python：3.9.22（建議使用 3.9 或更高版本）
-- OpenCV：4.11.0.86
-- Pygame：2.5.2
-- NumPy：1.24.3
-- PyTorch：2.0.1
-- torchvision：0.15.2
-- matplotlib：3.7.1
-- scipy：1.10.1
+- OpenCV：4.11.0
+- Pygame：2.5.0
+- NumPy：2.0.2
+- PyTorch：1.13.1
+- torchvision：0.14.1
+- matplotlib：3.9.2
+- scipy：1.13.1
 
 ### 安裝步驟
 
