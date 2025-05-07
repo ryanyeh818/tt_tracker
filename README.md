@@ -109,20 +109,20 @@
 ## 環境設置
 
 ### 系統要求
-- Python：3.13.3（建議使用 3.9 或更高版本）
+- Python：3.9.22（建議使用 3.9 或更高版本）
 - OpenCV：4.11.0.86
-- Pygame：2.6.1
-- NumPy：2.2.4
-- PyTorch：2.7.0
-- torchvision：0.22.0
-- matplotlib：3.10.1
-- scipy：1.15.2
+- Pygame：2.5.2
+- NumPy：1.24.3
+- PyTorch：2.0.1
+- torchvision：0.15.2
+- matplotlib：3.7.1
+- scipy：1.10.1
 
 ### 安裝步驟
 
 1. 確保安裝了正確版本的 Python：
 ```bash
-python --version  # 應顯示 3.9 或更高版本
+python --version  # 應顯示 3.9.22
 ```
 
 2. 克隆倉庫：
@@ -133,10 +133,8 @@ cd tt_tracker
 
 3. 創建並激活虛擬環境：
 ```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# 或
-.\venv\Scripts\activate  # Windows
+conda create -n tt python=3.9
+conda activate tt
 ```
 
 4. 安裝依賴：
@@ -145,10 +143,10 @@ pip install -r requirements.txt
 ```
 
 ### 注意事項
-- 本專案在 Python 3.13.3 環境下開發和測試
-- 如果使用其他 Python 版本，建議至少使用 3.9 或更高版本
+- 本專案在 Python 3.9.22 環境下開發和測試
+- 如果使用其他 Python 版本，建議使用 3.9 版本以確保最佳兼容性
 - 如果遇到 OpenCV 相關問題，可能需要安裝額外的系統依賴
-- 建議使用虛擬環境來避免包依賴衝突
+- 建議使用 Conda 環境來管理 Python 版本和套件依賴
 ---
 
 # Original TT_Tracker
