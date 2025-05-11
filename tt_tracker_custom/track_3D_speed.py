@@ -4,8 +4,11 @@ from pathlib import Path
 
 VIDEO_NAME = "videos_2"
 
+# 使用絕對路徑
+base_dir = Path(__file__).parent
+base_path = base_dir / "data" / VIDEO_NAME
+
 # 讀入參數與球路徑資料
-base_path = Path("data") / VIDEO_NAME
 c1 = np.load(base_path / "c1.npy")
 c2 = np.load(base_path / "c2.npy")
 ballpath1 = np.load(base_path / "ballpath1.npy").T

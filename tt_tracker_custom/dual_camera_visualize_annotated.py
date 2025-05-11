@@ -4,10 +4,14 @@ from pathlib import Path
 import time
 
 VIDEO_NAME = "videos_2"
-video1_path = Path("videos") / f"{VIDEO_NAME}_1.mp4"
-video2_path = Path("videos") / f"{VIDEO_NAME}_2.mp4"
-ballpath1 = np.load(f"data/{VIDEO_NAME}/ballpath1.npy")
-ballpath2 = np.load(f"data/{VIDEO_NAME}/ballpath2.npy")
+
+# 使用絕對路徑
+base_dir = Path(__file__).parent
+video1_path = base_dir / "videos" / f"{VIDEO_NAME}_1.mp4"
+video2_path = base_dir / "videos" / f"{VIDEO_NAME}_2.mp4"
+data_dir = base_dir / "data" / VIDEO_NAME
+ballpath1 = np.load(data_dir / "ballpath1.npy")
+ballpath2 = np.load(data_dir / "ballpath2.npy")
 
 # 開啟影片
 cap1 = cv2.VideoCapture(str(video1_path))
