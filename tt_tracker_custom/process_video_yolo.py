@@ -51,17 +51,27 @@ def main(args):
     modelWeights = "weights.onnx"
     net = cv2.dnn.readNet(modelWeights)
 
-    if platform.system() == "Darwin":
-        # 在 macOS 上強制使用 CPU
-        net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
-        net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
-    else:
+    # 設定 CUDA 後端
+    has_cuda = False
+    try:
+        has_cuda = cv2.cuda.getCudaEnabledDeviceCount() > 0
+    except:
+        print("CUDA not available on this system")
+
+    if has_cuda:
         try:
             net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
             net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA_FP16)
-        except:
+            print("Using CUDA acceleration")
+        except Exception as e:
+            print(f"CUDA setup failed: {e}")
+            print("Falling back to CPU")
             net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
             net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
+    else:
+        print("Using CPU for inference")
+        net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
+        net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 
     print("Processing Camera 1...")
     h1, w1, fps1, ballpath1 = detect_ballpath(video_path1, net)
