@@ -231,3 +231,80 @@ In demo.py set video_name to the name of your instance, and then choose to run t
 Implement automatic detection of table corners and net. (Problem if background contains white lines)
 
 Detect patterns, points of contact, etc.
+
+# TT Tracker
+
+桌球追蹤系統，支援單/雙鏡頭追蹤，可計算球速、軌跡等數據。
+
+## 功能特點
+
+- 支援單/雙鏡頭追蹤
+- 自動計算球速和軌跡
+- 支援 CUDA 加速（自動降級到 CPU）
+- 支援影片裁剪和處理
+- 支援 3D 軌跡可視化
+- 支援即時追蹤和影片回放
+
+## 環境需求
+
+- Python 3.8+
+- OpenCV
+- PyTorch
+- CUDA (可選，用於 GPU 加速)
+- 其他依賴套件見 `requirements.txt`
+
+## 安裝
+
+1. 克隆專案：
+```bash
+git clone https://github.com/ryanyeh818/tt_tracker.git
+cd tt_tracker
+```
+
+2. 安裝依賴：
+```bash
+pip install -r requirements.txt
+```
+
+## 使用說明
+
+### 基本追蹤
+```bash
+python tt_tracker_custom/balltracker_yolo.py --video path/to/video.mp4
+```
+
+### 雙鏡頭追蹤
+```bash
+python tt_tracker_custom/dual_camera_visualize_annotated.py --video1 path/to/video1.mp4 --video2 path/to/video2.mp4
+```
+
+### 影片裁剪
+```bash
+python tt_tracker_custom/crop_video.py --video path/to/video.mp4 --output path/to/output.mp4
+```
+
+### 3D 軌跡追蹤
+```bash
+python tt_tracker_custom/track_3D_speed.py --video1 path/to/video1.mp4 --video2 path/to/video2.mp4
+```
+
+## CUDA 支援
+
+系統會自動檢測是否有 CUDA 可用：
+- 如果有 CUDA 且 GPU 可用，將自動使用 GPU 加速
+- 如果沒有 CUDA 或 GPU 不可用，將自動降級到 CPU 模式
+
+您可以使用 `test_cuda.py` 來測試 CUDA 是否可用：
+```bash
+python tt_tracker_custom/test_cuda.py
+```
+
+## 注意事項
+
+1. 確保相機已正確校準
+2. 建議使用高幀率相機以獲得更好的追蹤效果
+3. 如果使用 GPU 加速，請確保已安裝正確版本的 CUDA 和 cuDNN
+
+## 授權
+
+MIT License
