@@ -92,15 +92,10 @@ class analyzer:
         self.bp2 = np.transpose(ball_pos_2)
 
         # Points in corners1 and corners2 should correspond according to:
-        # p1-p3, p2-p4, p3-p1, p4-p2
+        # For cameras on opposite sides of the net:
+        # p1-p1, p2-p2, p3-p3, p4-p4 (same corner points)
         self.pc1 = np.copy(corners1)
-        self.pc2 = np.zeros([6, 3])
-        self.pc2[0, :] = corners2[2, :]
-        self.pc2[1, :] = corners2[3, :]
-        self.pc2[2, :] = corners2[0, :]
-        self.pc2[3, :] = corners2[1, :]
-        self.pc2[4, :] = corners2[5, :]
-        self.pc2[5, :] = corners2[4, :]
+        self.pc2 = np.copy(corners2)
         self.pc1 = np.transpose(self.pc1)
         self.pc2 = np.transpose(self.pc2)
 

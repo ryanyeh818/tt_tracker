@@ -22,5 +22,4 @@ data/
 videos/
 videos_original/
 *.npy
-*.mp4
-weights.onnx 
+*.mp4 

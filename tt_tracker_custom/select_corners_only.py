@@ -37,11 +37,11 @@ def select_points_from_video(video_path):
 
 def main(args):
     video_name = args.video_name
-    data_dir = Path("data") / video_name
+    data_dir = Path(__file__).parent / "data" / video_name
     data_dir.mkdir(parents=True, exist_ok=True)
 
-    vid1_path = Path("videos") / f"{video_name}_1.mp4"
-    vid2_path = Path("videos") / f"{video_name}_2.mp4"
+    vid1_path = Path(__file__).parent / "videos" / f"{video_name}_1.mp4"
+    vid2_path = Path(__file__).parent / "videos" / f"{video_name}_2.mp4"
 
     print("Select 6 points for Camera 1...")
     c1 = select_points_from_video(vid1_path)

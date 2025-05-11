@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 from extended_yolo_v3 import pre_process, post_process
 import platform
+from tqdm import tqdm
 
 
 def detect_ballpath(video_path, net, class_name="ball"):
@@ -14,7 +15,14 @@ def detect_ballpath(video_path, net, class_name="ball"):
     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     ballpath = np.zeros((frame_count, 3))  # x, y, 1
+    detection_count = 0  # 計數成功檢測的幀數
+    total_boxes = 0  # 計數所有檢測到的框
+    max_conf = 0  # 記錄最高信心度
+    min_conf = 1  # 記錄最低信心度
 
+    # 使用 tqdm 創建進度條
+    pbar = tqdm(total=frame_count, desc="Processing frames", leave=True)
+    
     frame_idx = 0
     while cap.isOpened():
         ret, frame = cap.read()
@@ -25,18 +33,36 @@ def detect_ballpath(video_path, net, class_name="ball"):
         boxes, confidences, class_ids = post_process(frame, detections)
 
         if len(boxes) > 0:
+            total_boxes += len(boxes)
             # 取第一個檢測到的球（信心最高）
             box = boxes[0]
+            conf = confidences[0]
+            max_conf = max(max_conf, conf)
+            min_conf = min(min_conf, conf)
+            
             left, top, width_box, height_box = box
             center_x = left + width_box // 2
             center_y = top + height_box // 2
             ballpath[frame_idx] = [center_x, center_y, 1]
+            detection_count += 1
         else:
             ballpath[frame_idx] = [0, 0, 0]
 
         frame_idx += 1
+        pbar.update(1)  # 更新進度條
 
+    pbar.close()  # 關閉進度條
     cap.release()
+
+    # 輸出檢測統計資訊
+    print(f"\nDetection Statistics:")
+    print(f"Total frames: {frame_count}")
+    print(f"Detected frames: {detection_count}")
+    print(f"Detection rate: {(detection_count/frame_count)*100:.2f}%")
+    print(f"Total boxes detected: {total_boxes}")
+    print(f"Average boxes per detection: {total_boxes/detection_count if detection_count > 0 else 0:.2f}")
+    print(f"Confidence range: {min_conf:.2f} - {max_conf:.2f}")
+
     return height, width, fps, ballpath
 
 
@@ -78,12 +104,12 @@ def main(args):
     np.save(out_dir / "ballpath1.npy", ballpath1)
     np.save(out_dir / "param1.npy", np.array([h1, w1, fps1]))
 
-    print("Processing Camera 2...")
+    print("\nProcessing Camera 2...")
     h2, w2, fps2, ballpath2 = detect_ballpath(video_path2, net)
     np.save(out_dir / "ballpath2.npy", ballpath2)
     np.save(out_dir / "param2.npy", np.array([h2, w2, fps2]))
 
-    print("Done. Results saved to:", out_dir)
+    print("\nDone. Results saved to:", out_dir)
 
 
 if __name__ == "__main__":

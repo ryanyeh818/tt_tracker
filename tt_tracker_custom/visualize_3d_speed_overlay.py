@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from pathlib import Path
 
-VIDEO_NAME = "videos_2"
+VIDEO_NAME = "videos_3"
 video1_path = Path("videos") / f"{VIDEO_NAME}_1.mp4"
 video2_path = Path("videos") / f"{VIDEO_NAME}_2.mp4"
 ballpath1 = np.load(f"data/{VIDEO_NAME}/ballpath1.npy")
