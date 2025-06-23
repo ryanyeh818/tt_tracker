@@ -8,51 +8,56 @@
 
 ## Overview
 ### 主要工具
-* **analysis_functions.py** - 包含 `Analyzer` 類別，用於計算 3D 軌跡、速度等，以及視覺化功能。同時包含相機校正、三角測量、插值、視覺化等功能。
-  - 輸出：無直接輸出檔案，提供其他模組使用的功能
-  - 被引用於：`track_3D_speed.py`
-
-* **balltracker_yolo.py** - 使用 YOLO 模型在兩個影片的每一幀中尋找球的位置，並將這些位置儲存在 data 目錄中。
-  - 輸入：`videos/videos_2_*.mp4`, `weights.onnx`
-  - 輸出：`data/videos_2/ballpath1.npy`, `ballpath2.npy`, `param1.npy`, `param2.npy`
-  - 依賴：`process_video_yolo.py`
-
 * **crop_video.py** - 用於裁切和同步兩個影片，確保它們長度相同，且每一幀都大致對應到相同的時間點。
   - 輸入：`videos_original/*.mp4`
-  - 輸出：`videos/videos_2_1.mp4`, `videos_2_2.mp4`
+  - 輸出：`videos/videos_1_1.mp4`, `videos_1_2.mp4`
+
+* **balltracker_yolo.py** - 使用 YOLO 模型在兩個影片的每一幀中尋找球的位置，並將這些位置儲存在 data 目錄中。
+  - 輸入：`videos/videos_1_*.mp4`, `weights.onnx`
+  - 輸出：`data/videos_1/ballpath1.npy`, `ballpath2.npy`, `param1.npy`, `param2.npy`
+  - 依賴：`process_video_yolo.py`
+
+* **process_video_yolo.py** - 使用 YOLO 模型處理影片並偵測球的位置。
+  - 輸入：`videos/videos_1_*.mp4`, `weights.onnx`
+  - 輸出：無直接輸出檔案，提供球偵測功能
+  - 依賴：`extended_yolo_v3.py`
+  - 被引用於：`balltracker_yolo.py`
 
 * **extended_yolo_v3.py** - 包含使用 YOLO 模型偵測桌球的功能。
   - 輸出：無直接輸出檔案，提供 YOLO 模型相關功能
   - 被引用於：`process_video_yolo.py`
 
-* **process_video_yolo.py** - 使用 YOLO 模型處理影片並偵測球的位置。
-  - 輸入：`videos/videos_2_*.mp4`, `weights.onnx`
-  - 輸出：無直接輸出檔案，提供球偵測功能
-  - 依賴：`extended_yolo_v3.py`
-  - 被引用於：`balltracker_yolo.py`
+* **balltracker_yolov11.py** - 使用改良版 YOLO 模型進行球偵測，由吳院長的兒子提供。功能與 `balltracker_yolo.py` 相似，但模型效果更佳。
+  - 輸入：`videos/videos_1_*.mp4`, `last_train.pt`
+  - 輸出：`data/videos_1/ballpath1.npy`, `ballpath2.npy`, `param1.npy`, `param2.npy`
+  - 依賴：`process_video_yolo.py`
 
 * **track_3d_speed.py** - 將雙視角軌跡轉換為 3D 並計算球速。
-  - 輸入：`data/videos_2/c1.npy`, `c2.npy`, `ballpath1.npy`, `ballpath2.npy`, `param1.npy`, `param2.npy`
-  - 輸出：`data/videos_2/speed3d.npy`
+  - 輸入：`data/videos_1/c1.npy`, `c2.npy`, `ballpath1.npy`, `ballpath2.npy`, `param1.npy`, `param2.npy`
+  - 輸出：`data/videos_1/speed3d.npy`
   - 依賴：`analysis_functions.py`
 
+* **analysis_functions.py** - 包含 `Analyzer` 類別，用於計算 3D 軌跡、速度等，以及視覺化功能。同時包含相機校正、三角測量、插值、視覺化等功能。
+  - 輸出：無直接輸出檔案，提供其他模組使用的功能
+  - 被引用於：`track_3D_speed.py`
+
 * **visualize_3d_speed_overlay.py** - 同步顯示兩段影片，並疊加追蹤點和 3D 球速資訊。
-  - 輸入：`videos/videos_2_*.mp4`, `data/videos_2/ballpath*.npy`, `speed3d.npy`
+  - 輸入：`videos/videos_1_*.mp4`, `data/videos_1/ballpath*.npy`, `speed3d.npy`
   - 輸出：即時視覺化畫面（不輸出檔案）
 
 ### 補充工具
 
 * **tools/track_ball_speed.py** - 使用單一視角偵測球並即時計算 2D 球速。
-  - 輸入：`videos/videos_2_*.mp4`, `weights.onnx`
-  - 輸出：`data/videos_2/ballpath1.npy`, `speed1.npy`
+  - 輸入：`videos/videos_1_*.mp4`, `weights.onnx`
+  - 輸出：`data/videos_1/ballpath1.npy`, `speed1.npy`
   - 依賴：`extended_yolo_v3.py`
 
 * **tools/visualize_trace_on_video.py** - 在影片上顯示球的軌跡。
-  - 輸入：`videos/videos_2_*.mp4`, `data/videos_2/ballpath*.npy`
+  - 輸入：`videos/videos_1_*.mp4`, `data/videos_1/ballpath*.npy`
   - 輸出：即時視覺化畫面（不輸出檔案）
 
 * **tools/analyze_pts_diff.py** - 分析兩個影片的球軌跡差異。
-  - 輸入：`data/videos_2/ballpath1.npy`, `ballpath2.npy`
+  - 輸入：`data/videos_1/ballpath1.npy`, `ballpath2.npy`
   - 輸出：分析結果（不輸出檔案）
 
 ### 使用方式
@@ -88,7 +93,7 @@
 
 同步顯示兩個視角的影片，並疊加球的軌跡和 3D 球速資訊。
 
-### 輸出資料結構（以 `data/videos_2/` 為例）
+### 輸出資料結構（以 `data/videos_1/` 為例）
 
 | 檔案名稱         | 說明                            |
 |------------------|---------------------------------|
