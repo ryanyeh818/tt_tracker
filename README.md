@@ -17,15 +17,15 @@
   - 輸出：`data/videos_1/ballpath1.npy`, `ballpath2.npy`, `param1.npy`, `param2.npy`
   - 依賴：`process_video_yolo.py`
 
-* **process_video_yolo.py** - 使用 YOLO 模型處理影片並偵測球的位置。
-  - 輸入：`videos/videos_1_*.mp4`, `weights.onnx`
-  - 輸出：無直接輸出檔案，提供球偵測功能
-  - 依賴：`extended_yolo_v3.py`
-  - 被引用於：`balltracker_yolo.py`
+  * **process_video_yolo.py** - 使用 YOLO 模型處理影片並偵測球的位置。
+    - 輸入：`videos/videos_1_*.mp4`, `weights.onnx`
+    - 輸出：無直接輸出檔案，提供球偵測功能
+    - 依賴：`extended_yolo_v3.py`
+    - 被引用於：`balltracker_yolo.py`
 
-* **extended_yolo_v3.py** - 包含使用 YOLO 模型偵測桌球的功能。
-  - 輸出：無直接輸出檔案，提供 YOLO 模型相關功能
-  - 被引用於：`process_video_yolo.py`
+  * **extended_yolo_v3.py** - 包含使用 YOLO 模型偵測桌球的功能。
+    - 輸出：無直接輸出檔案，提供 YOLO 模型相關功能
+    - 被引用於：`process_video_yolo.py`
 
 * **balltracker_yolov11.py** - 使用改良版 YOLO 模型進行球偵測，由吳院長的兒子提供。功能與 `balltracker_yolo.py` 相似，但模型效果更佳。
   - 輸入：`videos/videos_1_*.mp4`, `last_train.pt`
@@ -37,9 +37,9 @@
   - 輸出：`data/videos_1/speed3d.npy`
   - 依賴：`analysis_functions.py`
 
-* **analysis_functions.py** - 包含 `Analyzer` 類別，用於計算 3D 軌跡、速度等，以及視覺化功能。同時包含相機校正、三角測量、插值、視覺化等功能。
-  - 輸出：無直接輸出檔案，提供其他模組使用的功能
-  - 被引用於：`track_3D_speed.py`
+  * **analysis_functions.py** - 包含 `Analyzer` 類別，用於計算 3D 軌跡、速度等，以及視覺化功能。同時包含相機校正、三角測量、插值、視覺化等功能。
+    - 輸出：無直接輸出檔案，提供其他模組使用的功能
+    - 被引用於：`track_3D_speed.py`
 
 * **visualize_3d_speed_overlay.py** - 同步顯示兩段影片，並疊加追蹤點和 3D 球速資訊。
   - 輸入：`videos/videos_1_*.mp4`, `data/videos_1/ballpath*.npy`, `speed3d.npy`
@@ -81,7 +81,7 @@
 4. 左下角
 5. 球網頂部（從下到上）
 
-#### 步驟 4: 追蹤球 (balltracker_yolo.py)
+#### 步驟 4: 追蹤球 (balltracker_yolo(v11).py)
 
 使用 YOLO 模型在每一幀中偵測球的位置。結果會儲存在 "data" 資料夾中，包含球的位置、角點位置、fps 等資訊。
 
