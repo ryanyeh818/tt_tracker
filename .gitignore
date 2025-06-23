@@ -23,3 +23,5 @@ videos/
 videos_original/
 *.npy
 *.mp4 
+*.pt
+*.onnx
